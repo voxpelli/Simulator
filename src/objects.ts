@@ -16,7 +16,7 @@ export abstract class PlaneObject {
     }
 
     /**
-     * Sets new rotation to the object
+     * Sets new rotation to the object, enables setting any direction
      * @param rotation New rotation
      */
     public setRotation(rotation: Vector2): void {
@@ -144,7 +144,7 @@ export class Grid {
     }
 
     /**
-     * Creates sparse (irregular) matrix
+     * Creates sparse (irregular) matrix, enables setting custom grid shape
      * @param data Matrix shape, each array is one row, o represents empty cell, 1 represents full cell
      */
     public setShape(data: MatrixValue[] | MatrixValue[][]): this {

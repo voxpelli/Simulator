@@ -4,7 +4,7 @@
     "yarn": "1.22.4"
   },
   "scripts": {
-    "start": "ts-node index.ts"
+    "start": "ts-node src/index.ts"
   },
   "dependencies": {
     "mathjs": "^7.2.0",

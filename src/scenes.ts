@@ -17,6 +17,13 @@ export class PlaneScene<T extends PlaneObject> {
     }
 
     /**
+     * Returns grid
+     */
+    public getGrid(): Grid {
+        return this.grid;
+    }
+
+    /**
      * Returns moving object
      */
     public getObj(): T {
@@ -34,6 +41,11 @@ export class PlaneScene<T extends PlaneObject> {
         new Promise((resolve, reject) => {
             const entries = this.commands.entries();
             for (const [i, c] of entries) {
+                // if object fell from grid, simulation end with error
+                if (!this.grid.isInside(this.obj.getPosition())) {
+                    reject(new Error('Object fell from plane'));
+                    break;
+                }
                 // index 0 is resereved for simulation end
                 if (c === 0) {
                     resolve();
@@ -41,16 +53,15 @@ export class PlaneScene<T extends PlaneObject> {
                 }
                 // executes command if it is defined in handlers array
                 handlers[c]?.();
-                // if object fell from grid, simulation end with error
-                if (!this.grid.isInside(this.obj.getPosition())) {
-                    reject(new Error('Object fell from plane'));
-                    break;
-                }
                 // when array has been interated
                 if (i + 1 === this.commands.length) {
                     resolve();
                     break;
                 }
+            }
+            // if object fell from grid, simulation end with error
+            if (!this.grid.isInside(this.obj.getPosition())) {
+                reject(new Error('Object fell from plane'));
             }
         })
             .then(() => {
